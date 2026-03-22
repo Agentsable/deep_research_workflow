@@ -1,0 +1,9 @@
+{
+  "name": "deep_research_workflow",
+  "version": "1.0.0",
+  "description": "Deep research plugin that scans the web, refines scope through interactive dialogs, and saves organized research output with per-project customizable agent definitions.",
+  "author": {
+    "name": "Agentsable"
+  },
+  "keywords": ["research", "deep-research", "web-scan", "agents"]
+}
