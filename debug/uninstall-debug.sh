@@ -9,6 +9,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 FINALIZE_SCRIPT="$SCRIPT_DIR/finalize-debug.py"
+CSV_SCRIPT="$SCRIPT_DIR/generate-csv.py"
 
 PROJECT_DIR="${1:-$(pwd)}"
 PROJECT_DIR="$(cd "$PROJECT_DIR" && pwd)"
@@ -64,6 +65,10 @@ if debug_session:
     if log_file and os.path.exists(log_file):
         print(f"Auto-finalizing session: {debug_session['session_id']}")
         subprocess.run(["python3", finalize_script, log_file])
+        json_file = log_file.replace(".jsonl", ".json")
+        if os.path.exists(json_file):
+            print(f"Generating CSV reports...")
+            subprocess.run(["python3", "$CSV_SCRIPT", json_file])
     else:
         print(f"Session log not found: {log_file}")
 else:

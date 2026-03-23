@@ -112,10 +112,18 @@ with open(settings_file, "w") as f:
 
 PYEOF
 
+CSV_SCRIPT="$SCRIPT_DIR/generate-csv.py"
+
 # Create a convenience finalize script in the session dir
 cat > "$DEBUG_DIR/finalize-latest.sh" << EOF
 #!/usr/bin/env bash
+set -euo pipefail
+echo "Finalizing debug session..."
 python3 "$FINALIZE_SCRIPT" "$LOG_FILE"
+JSON_FILE="${LOG_FILE%.jsonl}.json"
+echo ""
+echo "Generating CSV reports..."
+python3 "$CSV_SCRIPT" "\$JSON_FILE"
 EOF
 chmod +x "$DEBUG_DIR/finalize-latest.sh"
 
